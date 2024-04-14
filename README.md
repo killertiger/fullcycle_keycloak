@@ -1,5 +1,9 @@
 # Full Cycle - Keycloak
 
+Based on the course: "Full Cycle 3.0 - Keycloak"
+
+## External references
+
 External mail server used to debug and test an application:
 https://mailtrap.io/
 
@@ -8,7 +12,6 @@ https://jwt.io/
 allows you to decode, verify and generate JWT
 
 Docker Image: https://quay.io/repository/keycloak/keycloak 
-
 
 Recommended VS Code Extension:
 
@@ -19,23 +22,30 @@ Version: 0.25.1
 Publisher: Huachao Mao
 VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
+## Accessing application
+
+### Web App
 
 http://localhost:8080/
+
 User: admin
+
 Password: admin
 
 
-db:
-mysql:8.0-debian
-mysql debian images are usually smaller
+### Database
+docker image: mysql:8.0-debian
+
+Mysql debian images are usually smaller
+
+### Running application
 
 ```
 $ docker compose up -d
 ```
 
-Roles can be created by:
-- Realm or Client
 
+### Setup realm, client
 
 Create a realm: fullcycle-realm
 Create client: fullcycle-client
@@ -48,6 +58,6 @@ Create a user:
 - Create password: 123456
 
 
-## Testing 
+### Testing 
 
 Open the  `api.http`
