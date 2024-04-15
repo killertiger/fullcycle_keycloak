@@ -58,6 +58,8 @@ $ docker compose up -d
 
 Create a realm: fullcycle-realm
 Create client: fullcycle-client
+- Root URL: http://localhost:3000
+
 Create a user:
 - username: user@user.com
 - email: user@user.com
