@@ -22,6 +22,15 @@ Version: 0.25.1
 Publisher: Huachao Mao
 VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
+
+
+Name: PlantUML
+Id: jebbs.plantuml
+Description: Rich PlantUML support for Visual Studio Code.
+Version: 2.18.1
+Publisher: jebbs
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml
+
 ## Accessing application
 
 ### Web App
