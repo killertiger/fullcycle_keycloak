@@ -6,6 +6,7 @@ import crypto from 'crypto';
 declare module "express-session" {
     interface SessionData {
         nonce: string;
+        state: string;
     }
   }
 
@@ -24,8 +25,10 @@ app.use(
 
 app.get('/login', (req, res) => {
     const nonce = crypto.randomBytes(16).toString('base64');
+    const state = crypto.randomBytes(16).toString('base64');
 
     req.session.nonce = nonce;
+    req.session.state = state;
     req.session.save();
 
     const loginParams = new URLSearchParams({
@@ -34,6 +37,7 @@ app.get('/login', (req, res) => {
         response_type: 'code',
         scope: 'openid',
         nonce,
+        state
     })
 
     const url = `http://localhost:8080/realms/fullcycle-realm/protocol/openid-connect/auth?${loginParams.toString()}`;
@@ -44,6 +48,10 @@ app.get('/login', (req, res) => {
 
 app.get('/callback', async (req, res) => {
     console.log(req.query);
+
+    if (req.query.state !== req.session.state) {
+        return res.status(401).send({message: 'Unauthenticated'});
+    }
 
     const bodyParams = new URLSearchParams({
         client_id: 'fullcycle-client',
