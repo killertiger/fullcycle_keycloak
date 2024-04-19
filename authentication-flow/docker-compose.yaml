@@ -7,3 +7,14 @@ services:
       - 3000:3000
     volumes:
       - .:/home/node/app
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+#     networks:
+#       - keycloak_network
+
+# networks:
+#   keycloak_network:
+#     name: keycloak_network
+#     driver: bridge
+    # attachable: true
+    # external: true

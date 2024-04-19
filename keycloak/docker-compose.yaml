@@ -16,7 +16,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  
+    # networks:
+    #   - keycloak_network
+
   db:
     image: mysql:8.0-debian
     volumes:
@@ -31,3 +33,12 @@ services:
       interval: 5s
       timeout: 10s
       retries: 3
+    # networks:
+    #   - keycloak_network
+
+# networks:
+#   keycloak_network:
+#     name: keycloak_network
+#     driver: bridge
+#     # attachable: true
+#     external: true
