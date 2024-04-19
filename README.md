@@ -33,7 +33,7 @@ VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=jebbs.p
 
 ## Accessing application
 
-### Web App
+### Keycloak - Web App
 
 http://localhost:8080/
 
@@ -48,6 +48,11 @@ docker image: mysql:8.0-debian
 Mysql debian images are usually smaller
 
 ### Running application
+
+Add the following line on `/etc/hosts`
+```
+127.0.0.1 host.docker.internal
+```
 
 ```
 $ docker compose up -d
@@ -72,3 +77,14 @@ Create a user:
 ### Testing 
 
 Open the  `api.http`
+
+
+### Authorization flow
+http://localhost:3000/login
+user@user.com
+123456
+
+```
+$ docker exec -it app bash
+$ npm run authentication-code
+```
