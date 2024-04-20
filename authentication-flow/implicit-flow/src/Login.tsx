@@ -1,22 +1,21 @@
 import { Navigate } from "react-router-dom";
-import { makeLoginUrl } from "./utils";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "./AuthProvider";
+// import { makeLoginUrl } from "./utils";
 
 export function Login() {
-    const authContext = {
-        auth: false
-    };
+    const { auth, makeLoginUrl } = useContext(AuthContext);
 
     useEffect(() => {
-        if (!authContext.auth) {
+        if (!auth) {
             window.location.href = makeLoginUrl();
         }
-    }, [authContext]);
+    }, [auth]);
 
-    return authContext.auth ? <Navigate to="/admin" /> :
-     (
-        <div>
-            Loading...
-        </div>
-    );
+    return auth ? <Navigate to="/admin" /> :
+        (
+            <div>
+                Loading...
+            </div>
+        );
 }
