@@ -4,6 +4,7 @@ import { Logout } from './Logout';
 import { Callback } from './Callback';
 import { AuthProvider } from './AuthProvider';
 import { Admin } from './Admin';
+import { PrivateRoute } from './PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,9 @@ const router = createBrowserRouter([
   {
     path: "admin",
     element: (
-      <Admin />
+      <PrivateRoute>
+        <Admin />
+      </PrivateRoute>
     ),
   },
   {
