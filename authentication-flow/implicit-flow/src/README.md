@@ -15,3 +15,9 @@ Select the fullcycle-realm
 $ docker compose -it app bash
 $ npm run implicit
 ```
+
+
+Urls:
+http://localhost:3000/admin -> Private route
+http://localhost:3000/login
+http://localhost:3000/logout
