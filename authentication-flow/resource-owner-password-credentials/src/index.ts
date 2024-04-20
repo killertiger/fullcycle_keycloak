@@ -37,6 +37,10 @@ const middlewareIsAuth = (
 };
 
 app.get('/login', (req, res) => {
+    //@ts-expect-error type mismatch
+    if (req.session.user) {
+        return res.redirect('/admin');
+    }
     res.sendFile(__dirname + '/login.html');
 });
 
@@ -68,6 +72,41 @@ app.post('/login', async (req, res) => {
     res.redirect('/admin');
 });
 
+app.get('/logout', async (req, res) => {
+    // const logoutParams = new URLSearchParams({
+    //     //@ts-expect-error - type mismatch
+    //     id_token_hint: req.session.user.id_token,
+    //     post_logout_redirect_uri: 'http://localhost:3000/login',
+    // });
+
+    // req.session.destroy(() => {
+    //     console.log('Session destroyed');
+    // });
+
+    // const url = "http://localhost:8080/realms/fullcycle-realm/protocol/openid-connect/logout?" + logoutParams.toString();
+    // res.redirect(url);
+
+    const response = await fetch(
+        'http://host.docker.internal:8080/realms/fullcycle-realm/protocol/openid-connect/revoke',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                client_id: "fullcycle-client",
+                //@ts-expect-error - type mismatch
+                token: req.session.user.access_token,
+            }).toString(),
+        }
+    );
+
+    req.session.destroy(() => {
+        console.log('Session destroyed');
+    });
+
+    res.redirect("/login");
+});
 
 app.get('/callback', async (req, res) => {
     console.log(req.query);
