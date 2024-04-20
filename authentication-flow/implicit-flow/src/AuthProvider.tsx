@@ -10,14 +10,14 @@ type AuthContextProps = {
         idToken: string,
         state: string
     ) => JWTPayload | null;
-    logout: () => void;
+    makeLogoutUrl: () => string;
 };
 
 const initContextData: AuthContextProps = {
     auth: null,
     makeLoginUrl: utils.makeLoginUrl,
+    makeLogoutUrl: utils.makeLogoutUrl,
     login: (accessToken: string, idToken: string, state: string) => { return null },
-    logout() { },
 }
 
 export const AuthContext = createContext(initContextData);
@@ -31,8 +31,8 @@ export const AuthProvider = (props: PropsWithChildren) => {
         setData((oldData) => ({
             auth: authData,
             makeLoginUrl: oldData.makeLoginUrl,
+            makeLogoutUrl: oldData.makeLogoutUrl,
             login: oldData.login,
-            logout: oldData.logout,
         }));
         return authData;
     }, []);
@@ -40,8 +40,8 @@ export const AuthProvider = (props: PropsWithChildren) => {
     const [data, setData] = useState({
         auth: utils.getAuth(),
         makeLoginUrl: utils.makeLoginUrl,
+        makeLogoutUrl: utils.makeLogoutUrl,
         login: makeLogin,
-        logout: () => { }
     });
 
     return (

@@ -39,7 +39,7 @@ export function login(accessToken: string, idToken: string, state: string) {
         throw new Error("Invalid nonce")
     }
 
-    if(decodedIdToken.nonce !== Cookies.get("nonce")) {
+    if (decodedIdToken.nonce !== Cookies.get("nonce")) {
         throw new Error("Invalid nonce")
     }
 
@@ -62,4 +62,22 @@ export function getAuth() {
         console.log(e);
         return null;
     }
+}
+
+export function makeLogoutUrl() {
+    if (!Cookies.get('id_token')) {
+        return "";
+    }
+
+    const logoutParams = new URLSearchParams({
+        id_token_hint: Cookies.get("id_token") as string,
+        post_logout_redirect_uri: "http://localhost:3000/login",
+    });
+
+    Cookies.remove("access_token");
+    Cookies.remove("id_token");
+    Cookies.remove("nonce");
+    Cookies.remove("state");
+
+    return `http://localhost:8080/realms/fullcycle-realm/protocol/openid-connect/logout?${logoutParams.toString()}`;
 }
